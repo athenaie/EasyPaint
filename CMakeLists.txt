@@ -28,7 +28,9 @@ set (HEADERS
     sources/undocommand.h
     sources/widgets/toolbar.h
     sources/widgets/colorchooser.h
-    sources/widgets/palettebar.h
+    sources/widgets/abstractpalettebar.h
+    sources/widgets/standardpalettebar.h
+    sources/widgets/custompalettebar.h
     sources/widgets/palettebutton.h
     sources/widgets/shortcutedit.h
     sources/widgets/abstracteffectsettings.h
@@ -71,7 +73,9 @@ set (SOURCES
     sources/undocommand.cpp
     sources/widgets/toolbar.cpp
     sources/widgets/colorchooser.cpp
-    sources/widgets/palettebar.cpp
+    sources/widgets/abstractpalettebar.cpp
+    sources/widgets/standardpalettebar.cpp
+    sources/widgets/custompalettebar.cpp
     sources/widgets/palettebutton.cpp
     sources/widgets/shortcutedit.cpp
     sources/widgets/customfiltersettings.cpp

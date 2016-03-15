@@ -28,7 +28,8 @@
 #include "imagearea.h"
 #include "datasingleton.h"
 #include "dialogs/settingsdialog.h"
-#include "widgets/palettebar.h"
+#include "widgets/standardpalettebar.h"
+#include "widgets/custompalettebar.h"
 
 #include <QApplication>
 #include <QAction>
@@ -450,7 +451,7 @@ void MainWindow::initializeToolBar()
 
 void MainWindow::initializePaletteBar()
 {
-    mPaletteBar = new PaletteBar(mToolbar);
+    mPaletteBar = new StandardPaletteBar(mToolbar);
     addToolBar(Qt::BottomToolBarArea, mPaletteBar);
 }
 

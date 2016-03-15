@@ -36,7 +36,8 @@ class QAction;
 class QStatusBar;
 class QTabWidget;
 class ToolBar;
-class PaletteBar;
+class StandardPaletteBar;
+class CustomPaletteBar;
 class ImageArea;
 class QLabel;
 class QUndoGroup;
@@ -94,7 +95,7 @@ private:
     QStatusBar *mStatusBar;
     QTabWidget *mTabWidget;
     ToolBar *mToolbar;
-    PaletteBar *mPaletteBar;
+    StandardPaletteBar *mPaletteBar;
     QLabel *mSizeLabel, *mPosLabel, *mColorPreviewLabel, *mColorRGBLabel;
 
     QMap<InstrumentsEnum, QAction*> mInstrumentsActMap;

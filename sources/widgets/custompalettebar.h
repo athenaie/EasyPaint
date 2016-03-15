@@ -1,7 +1,7 @@
 /*
  * This source file is part of EasyPaint.
  *
- * Copyright (c) 2012 EasyPaint <https://github.com/Gr1N/EasyPaint>
+ * Copyright (c) 2016 EasyPaint <https://github.com/Gr1N/EasyPaint>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,48 +23,23 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef PALETTEBAR_H
-#define PALETTEBAR_H
+#ifndef CUSTOMPALETTEBAR_H
+#define CUSTOMPALETTEBAR_H
 
-#include "toolbar.h"
-#include "palettebutton.h"
+#include "abstractpalettebar.h"
 
-#include <QToolBar>
-
-/**
-  * @brief Toolbar with some number of differrent colors
-  *
-  */
-class PaletteBar : public QToolBar
+class CustomPaletteBar : public AbstractPaletteBar
 {
-    Q_OBJECT
 
 public:
-    PaletteBar(ToolBar *toolBar);
+    CustomPaletteBar(ToolBar *toolBar);
 
-private:
+protected:
     /**
       * @brief Color buttons initializing
       *
       */
-    void initializeItems();
-    /**
-     * @brief Create new QToolButton
-     *
-     * @param name Color name
-     * @param color Color of button
-     * @return QToolButton Created QToolButton.
-     */
-
-    PaletteButton *mColorButton;
-    ToolBar *mToolBar;
-    bool mIsRightButtonCLicked;
-
-private slots:
-    void colorClicked();
-
-protected:
-    void contextMenuEvent(QContextMenuEvent *);
+    virtual void initializeItems();
 };
 
-#endif // PALETTEBAR_H
+#endif // CUSTOMPALETTEBAR_H
