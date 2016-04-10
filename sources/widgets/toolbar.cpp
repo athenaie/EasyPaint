@@ -88,11 +88,13 @@ void ToolBar::initializeItems()
     mPColorChooser->setStatusTip(tr("Primary color"));
     mPColorChooser->setToolTip(tr("Primary color"));
     connect(mPColorChooser, SIGNAL(sendColor(QColor)), this, SLOT(primaryColorChanged(QColor)));
+    connect(mPColorChooser, SIGNAL(colorDialogClosed()), this, SIGNAL(colorDialogClosed()));
 
     mSColorChooser = new ColorChooser(255, 255, 255, this);
     mSColorChooser->setStatusTip(tr("Secondary color"));
     mSColorChooser->setToolTip(tr("Secondary color"));
     connect(mSColorChooser, SIGNAL(sendColor(QColor)), this, SLOT(secondaryColorChanged(QColor)));
+    connect(mSColorChooser, SIGNAL(colorDialogClosed()), this, SIGNAL(colorDialogClosed()));
 
     QSpinBox *penSizeSpin = new QSpinBox();
     penSizeSpin->setRange(1, 20);

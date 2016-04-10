@@ -25,6 +25,8 @@
 
 #include "custompalettebar.h"
 
+#include <QColorDialog>
+
 CustomPaletteBar::CustomPaletteBar(ToolBar *toolbar) :
         AbstractPaletteBar(toolbar)
 {
@@ -33,7 +35,32 @@ CustomPaletteBar::CustomPaletteBar(ToolBar *toolbar) :
 
 void CustomPaletteBar::initializeItems()
 {
-    mColorButton = new PaletteButton(Qt::black);
-    connect(mColorButton, SIGNAL(colorPicked()), this, SLOT(colorClicked()));
-    addWidget(mColorButton);
+    QColorDialog::setCustomColor(0, 0xffffffff);
+}
+
+void CustomPaletteBar::updateColors()
+{
+    clearAllColors();
+    addCustomColors();
+}
+
+void CustomPaletteBar::clearAllColors()
+{
+    mColorButtons.clear();
+}
+
+void CustomPaletteBar::addCustomColors()
+{
+    for (int i = 0; i < QColorDialog::customCount(); i++)
+    {
+        QRgb color = QColorDialog::customColor(i);
+        // add new button to toolbar if color is not default (white)
+        if (color != 0xffffffff)
+        {
+            ButtonPtr colorButton(new PaletteButton(color));    // create new button
+            mColorButtons.push_back(colorButton);               // store button pointer in vector
+            connect(colorButton.data(), SIGNAL(colorPicked()), this, SLOT(colorClicked()));
+            addWidget(colorButton.data());                      // add button to toolbar
+        }
+    }
 }

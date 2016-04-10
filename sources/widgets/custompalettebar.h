@@ -30,16 +30,39 @@
 
 class CustomPaletteBar : public AbstractPaletteBar
 {
+    Q_OBJECT
 
 public:
     CustomPaletteBar(ToolBar *toolBar);
 
+public slots:
+    /**
+     * @brief Refresh colors in palette bar to match custom colors.
+     *
+     */
+    virtual void updateColors();
+
 protected:
     /**
-      * @brief Color buttons initializing
+      * @brief Reset custom colors to default (white).
       *
       */
     virtual void initializeItems();
+
+    /**
+      * @brief Remove all custom color buttons.
+      *
+      */
+    virtual void clearAllColors();
+
+    /**
+     * @brief Create a button for each custom color.
+     *
+     */
+    virtual void addCustomColors();
+
+    typedef QSharedPointer<PaletteButton> ButtonPtr;
+    QVector<ButtonPtr> mColorButtons;
 };
 
 #endif // CUSTOMPALETTEBAR_H

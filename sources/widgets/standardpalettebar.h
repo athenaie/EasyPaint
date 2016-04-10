@@ -36,9 +36,9 @@ public:
 
 protected:
     /**
-      * @brief Color buttons initializing
-      *
-      */
+     * @brief Color buttons initializing
+     *
+     */
     virtual void initializeItems();
 };
 

@@ -458,6 +458,7 @@ void MainWindow::initializePaletteBar()
 
     mCustomPaletteBar = new CustomPaletteBar(mToolbar);
     addToolBar(Qt::BottomToolBarArea, mCustomPaletteBar);
+    connect(mToolbar, SIGNAL(colorDialogClosed()), mCustomPaletteBar, SLOT(updateColors()));
 }
 
 ImageArea* MainWindow::getCurrentImageArea()

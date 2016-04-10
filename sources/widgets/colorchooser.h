@@ -78,6 +78,8 @@ signals:
      */
     void sendColor(const QColor &);
 
+    void colorDialogClosed();
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     
