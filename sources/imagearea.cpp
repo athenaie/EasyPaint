@@ -76,6 +76,9 @@ ImageArea::ImageArea(const bool &isOpen, const QString &filePath, QWidget *paren
     mFilePath = QString();
     makeFormatsFilters();
     initializeImage();
+
+    mCanvas = QRect(0, 0, mImage->width(), mImage->height());
+
     mZoomFactor = 1;
 
     mAdditionalTools = new AdditionalTools(this, this->parent());
@@ -170,6 +173,7 @@ void ImageArea::initializeImage()
 {
     mImage = new QImage(DataSingleton::Instance()->getBaseSize(),
                         QImage::Format_ARGB32_Premultiplied);
+
 }
 
 void ImageArea::open()
@@ -428,17 +432,22 @@ void ImageArea::paintEvent(QPaintEvent *event)
     QPainter *painter = new QPainter(this);
     //QRect *rect = new QRect(event->rect());
 
-    painter->setBrush(QBrush(QPixmap(":media/textures/transparent.jpg")));
+    painter->scale(this->getZoomFactor(), this->getZoomFactor());
+    //painter->setBrush(QBrush(QPixmap(":media/textures/transparent.jpg")));
+    painter->setBrush(QBrush(Qt::white));
     painter->drawRect(0, 0,
-                      mImage->rect().right() - 1,
+                      mImage->rect().right()- 1,
                       mImage->rect().bottom() - 1);
+    //painter->drawRect(0, 0, mCanvas.width() - 1, mCanvas.height() - 1);
 
     painter->drawImage(event->rect(), *mImage, event->rect());
+    //painter->drawImage(QRect(0, 0, 100, 100), *mImage, mImage->rect());
 
     painter->setPen(Qt::NoPen);
     painter->setBrush(QBrush(Qt::black));
-    painter->drawRect(QRect(mImage->rect().right(),
-                            mImage->rect().bottom(), 6, 6));
+    painter->drawRect(QRect(this->getZoomFactor() * mImage->rect().right(),
+                            this->getZoomFactor() * mImage->rect().bottom(), 6, 6));
+    //painter->drawRect(QRect(200, 205, 100, 100));
 
     painter->end();
 }

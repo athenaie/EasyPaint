@@ -76,6 +76,7 @@ void AdditionalTools::resizeCanvas(int width, int height, bool flag)
 
     mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
                         mPImageArea->getImage()->rect().bottom() + 6);
+    mPImageArea->resize(width, height);
     mPImageArea->setEdited(true);
     mPImageArea->clearSelection();
 }
@@ -85,9 +86,11 @@ void AdditionalTools::resizeImage()
     ResizeDialog resizeDialog(mPImageArea->getImage()->size(), qobject_cast<QWidget *>(this->parent()));
     if(resizeDialog.exec() == QDialog::Accepted)
     {
+        //QSize s = mPImageArea->size();
         mPImageArea->setImage(mPImageArea->getImage()->scaled(resizeDialog.getNewSize()));
         mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
                             mPImageArea->getImage()->rect().bottom() + 6);
+        //mPImageArea->resize(s.width()+6, s.height() + 6);
         mPImageArea->setEdited(true);
         mPImageArea->clearSelection();
     }
@@ -127,7 +130,7 @@ bool AdditionalTools::zoomImage(qreal factor)
     }
     else
     {
-        mPImageArea->setImage(mPImageArea->getImage()->transformed(QTransform::fromScale(factor, factor)));
+        mPImageArea->setImage(*(mPImageArea->getImage()));
         mPImageArea->resize((mPImageArea->rect().width())*factor, (mPImageArea->rect().height())*factor);
         emit sendNewImageSize(mPImageArea->size());
         mPImageArea->setEdited(true);
