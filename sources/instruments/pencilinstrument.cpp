@@ -97,11 +97,13 @@ void PencilInstrument::paint(ImageArea &imageArea, bool isSecondaryColor, bool)
 
     if(mStartPoint != mEndPoint)
     {
+        painter.scale(1/imageArea.getZoomFactor(), 1/imageArea.getZoomFactor());
         painter.drawLine(mStartPoint, mEndPoint);
     }
 
     if(mStartPoint == mEndPoint)
     {
+        painter.scale(1/imageArea.getZoomFactor(), 1/imageArea.getZoomFactor());
         painter.drawPoint(mStartPoint);
     }
     imageArea.setEdited(true);
