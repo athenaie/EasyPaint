@@ -451,8 +451,13 @@ void MainWindow::initializeToolBar()
 
 void MainWindow::initializePaletteBar()
 {
-    mPaletteBar = new StandardPaletteBar(mToolbar);
-    addToolBar(Qt::BottomToolBarArea, mPaletteBar);
+    mStandardPaletteBar = new StandardPaletteBar(mToolbar);
+    addToolBar(Qt::BottomToolBarArea, mStandardPaletteBar);
+
+    mStandardPaletteBar->addSeparator();
+
+    mCustomPaletteBar = new CustomPaletteBar(mToolbar);
+    addToolBar(Qt::BottomToolBarArea, mCustomPaletteBar);
 }
 
 ImageArea* MainWindow::getCurrentImageArea()
@@ -799,7 +804,8 @@ void MainWindow::enableActions(int index)
     mEffectsMenu->setEnabled(isEnable);
     mInstrumentsMenu->setEnabled(isEnable);
     mToolbar->setEnabled(isEnable);
-    mPaletteBar->setEnabled(isEnable);
+    mStandardPaletteBar->setEnabled(isEnable);
+    mCustomPaletteBar->setEnabled(isEnable);
 
     mSaveAction->setEnabled(isEnable);
     mSaveAsAction->setEnabled(isEnable);

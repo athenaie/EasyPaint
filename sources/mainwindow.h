@@ -95,7 +95,8 @@ private:
     QStatusBar *mStatusBar;
     QTabWidget *mTabWidget;
     ToolBar *mToolbar;
-    StandardPaletteBar *mPaletteBar;
+    StandardPaletteBar *mStandardPaletteBar;
+    CustomPaletteBar *mCustomPaletteBar;
     QLabel *mSizeLabel, *mPosLabel, *mColorPreviewLabel, *mColorRGBLabel;
 
     QMap<InstrumentsEnum, QAction*> mInstrumentsActMap;
