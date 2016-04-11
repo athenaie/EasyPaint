@@ -53,7 +53,7 @@ void CustomPaletteBar::addCustomColors()
 {
     for (int i = 0; i < QColorDialog::customCount(); i++)
     {
-        QRgb color = QColorDialog::customColor(i);
+        QColor color = QColorDialog::customColor(i);
         // add new button to toolbar if color is not default (white)
         if (color != 0xffffffff)
         {
