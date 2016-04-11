@@ -92,6 +92,7 @@ void RectangleInstrument::paint(ImageArea &imageArea, bool isSecondaryColor, boo
     }
     if(mStartPoint != mEndPoint)
     {
+        painter.scale(1/imageArea.getZoomFactor(), 1/imageArea.getZoomFactor());
         painter.drawRect(QRect(mStartPoint, mEndPoint));
     }
     imageArea.setEdited(true);
