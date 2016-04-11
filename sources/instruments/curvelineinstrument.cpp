@@ -51,17 +51,17 @@ void CurveLineInstrument::mousePressEvent(QMouseEvent *event, ImageArea &imageAr
         //draw linear Bezier curve
         case 0:
             mImageCopy = *imageArea.getImage();
-            mStartPoint = mEndPoint = mFirstControlPoint = mSecondControlPoint = event->pos();
+            mStartPoint = mEndPoint = mFirstControlPoint = mSecondControlPoint = QPoint(event->pos().x()/imageArea.getZoomFactor(), event->pos().y()/imageArea.getZoomFactor());
             ++mPointsCount;
             break;
         //draw square Bezier curve
         case 1:
-            mFirstControlPoint = mSecondControlPoint = event->pos();
+            mFirstControlPoint = mSecondControlPoint = QPoint(event->pos().x()/imageArea.getZoomFactor(), event->pos().y()/imageArea.getZoomFactor());
             ++mPointsCount;
             break;
         //draw cubic Bezier curve
         case 2:
-            mSecondControlPoint = event->pos();
+            mSecondControlPoint = QPoint(event->pos().x()/imageArea.getZoomFactor(), event->pos().y()/imageArea.getZoomFactor());
             mPointsCount = 0;
             break;
         }
@@ -78,15 +78,15 @@ void CurveLineInstrument::mouseMoveEvent(QMouseEvent *event, ImageArea &imageAre
         {
         //draw linear Bezier curve
         case 1:
-            mEndPoint = event->pos();
+            mEndPoint = QPoint(event->pos().x()/imageArea.getZoomFactor(), event->pos().y()/imageArea.getZoomFactor());
             break;
         //draw square Bezier curve
         case 2:
-            mFirstControlPoint = mSecondControlPoint = event->pos();
+            mFirstControlPoint = mSecondControlPoint = QPoint(event->pos().x()/imageArea.getZoomFactor(), event->pos().y()/imageArea.getZoomFactor());
             break;
         //draw cubic Bezier curve
         case 0:
-            mSecondControlPoint = event->pos();
+            mSecondControlPoint = QPoint(event->pos().x()/imageArea.getZoomFactor(), event->pos().y()/imageArea.getZoomFactor());
             break;
         }
 
