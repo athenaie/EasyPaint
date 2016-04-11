@@ -1,7 +1,7 @@
 /*
  * This source file is part of EasyPaint.
  *
- * Copyright (c) 2012 EasyPaint <https://github.com/Gr1N/EasyPaint>
+ * Copyright (c) 2016 EasyPaint <https://github.com/Gr1N/EasyPaint>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,66 +23,23 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef COLORCHOOSER_H
-#define COLORCHOOSER_H
+#ifndef STANDARDPALETTEBAR_H
+#define STANDARDPALETTEBAR_H
 
-#include <QLabel>
+#include "abstractpalettebar.h"
 
-QT_BEGIN_NAMESPACE
-class QColor;
-class QPixmap;
-class QPainter;
-class QMouseEvent;
-class QColorDialog;
-QT_END_NAMESPACE
-
-/**
- * @brief Widget for selecting color.
- *
- */
-class ColorChooser : public QLabel
+class StandardPaletteBar : public AbstractPaletteBar
 {
-    Q_OBJECT
 
 public:
-    /**
-     * @brief Constructor
-     *
-     * @param r Red
-     * @param g Green
-     * @param b Blue
-     * @param parent Pointer for parent.
-     */
-    explicit ColorChooser(const int &r, const int &g, const int &b,
-                          QWidget *parent = 0);
-    ~ColorChooser();
-    
-private:
-    QColor *mCurrentColor;
-    QPixmap *mPixmapColor;
-    QPainter *mPainterColor;
-
-public slots:
-    /**
-     * @brief Slot for set color to widget.
-     *
-     * @param color Color to set.
-     */
-    void setColor(const QColor &color);
-
-signals:
-    /**
-     * @brief Signal for sending choosen color
-     *
-     * @param Color to send
-     */
-    void sendColor(const QColor &);
-
-    void colorDialogClosed();
+    StandardPaletteBar(ToolBar *toolBar);
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    
+    /**
+     * @brief Color buttons initializing
+     *
+     */
+    virtual void initializeItems();
 };
 
-#endif // COLORCHOOSER_H
+#endif // STANDARDPALETTEBAR_H

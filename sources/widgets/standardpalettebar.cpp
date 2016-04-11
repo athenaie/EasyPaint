@@ -1,7 +1,7 @@
 /*
  * This source file is part of EasyPaint.
  *
- * Copyright (c) 2012 EasyPaint <https://github.com/Gr1N/EasyPaint>
+ * Copyright (c) 2016 EasyPaint <https://github.com/Gr1N/EasyPaint>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,18 +23,15 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include "palettebar.h"
-#include "../datasingleton.h"
+#include "standardpalettebar.h"
 
-PaletteBar::PaletteBar(ToolBar *toolbar) :
-    QToolBar(tr("Colors"))
+StandardPaletteBar::StandardPaletteBar(ToolBar *toolbar) :
+        AbstractPaletteBar(toolbar)
 {
-    mToolBar = toolbar;
-    setMovable(false);
     initializeItems();
 }
 
-void PaletteBar::initializeItems()
+void StandardPaletteBar::initializeItems()
 {
     mColorButton = new PaletteButton(Qt::black);
     connect(mColorButton, SIGNAL(colorPicked()), this, SLOT(colorClicked()));
@@ -96,11 +93,3 @@ void PaletteBar::initializeItems()
     connect(mColorButton, SIGNAL(colorPicked()), this, SLOT(colorClicked()));
     addWidget(mColorButton);
 }
-
-void PaletteBar::colorClicked()
-{
-    mToolBar->setPrimaryColorView();
-    mToolBar->setSecondaryColorView();
-}
-
-void PaletteBar::contextMenuEvent(QContextMenuEvent *) { }

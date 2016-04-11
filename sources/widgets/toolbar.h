@@ -71,6 +71,7 @@ private:
 signals:
     void sendClearStatusBarColor();
     void sendClearImageSelection();
+    void colorDialogClosed();
 
 public slots:
     void setPrimaryColorView();

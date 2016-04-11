@@ -28,7 +28,8 @@
 #include "imagearea.h"
 #include "datasingleton.h"
 #include "dialogs/settingsdialog.h"
-#include "widgets/palettebar.h"
+#include "widgets/standardpalettebar.h"
+#include "widgets/custompalettebar.h"
 
 #include <QApplication>
 #include <QAction>
@@ -450,8 +451,14 @@ void MainWindow::initializeToolBar()
 
 void MainWindow::initializePaletteBar()
 {
-    mPaletteBar = new PaletteBar(mToolbar);
-    addToolBar(Qt::BottomToolBarArea, mPaletteBar);
+    mStandardPaletteBar = new StandardPaletteBar(mToolbar);
+    addToolBar(Qt::BottomToolBarArea, mStandardPaletteBar);
+
+    mStandardPaletteBar->addSeparator();
+
+    mCustomPaletteBar = new CustomPaletteBar(mToolbar);
+    addToolBar(Qt::BottomToolBarArea, mCustomPaletteBar);
+    connect(mToolbar, SIGNAL(colorDialogClosed()), mCustomPaletteBar, SLOT(updateColors()));
 }
 
 ImageArea* MainWindow::getCurrentImageArea()
@@ -798,7 +805,8 @@ void MainWindow::enableActions(int index)
     mEffectsMenu->setEnabled(isEnable);
     mInstrumentsMenu->setEnabled(isEnable);
     mToolbar->setEnabled(isEnable);
-    mPaletteBar->setEnabled(isEnable);
+    mStandardPaletteBar->setEnabled(isEnable);
+    mCustomPaletteBar->setEnabled(isEnable);
 
     mSaveAction->setEnabled(isEnable);
     mSaveAsAction->setEnabled(isEnable);

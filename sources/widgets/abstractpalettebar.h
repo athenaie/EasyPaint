@@ -1,7 +1,7 @@
 /*
  * This source file is part of EasyPaint.
  *
- * Copyright (c) 2012 EasyPaint <https://github.com/Gr1N/EasyPaint>
+ * Copyright (c) 2016 EasyPaint <https://github.com/Gr1N/EasyPaint>
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,66 +23,43 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef COLORCHOOSER_H
-#define COLORCHOOSER_H
+#ifndef ABSTRACTPALETTEBAR_H
+#define ABSTRACTPALETTEBAR_H
 
-#include <QLabel>
+#include "toolbar.h"
+#include "palettebutton.h"
 
-QT_BEGIN_NAMESPACE
-class QColor;
-class QPixmap;
-class QPainter;
-class QMouseEvent;
-class QColorDialog;
-QT_END_NAMESPACE
+#include <QToolBar>
 
 /**
- * @brief Widget for selecting color.
- *
- */
-class ColorChooser : public QLabel
+  * @brief Toolbar with some number of differrent colors
+  *
+  */
+class AbstractPaletteBar : public QToolBar
 {
     Q_OBJECT
 
 public:
-    /**
-     * @brief Constructor
-     *
-     * @param r Red
-     * @param g Green
-     * @param b Blue
-     * @param parent Pointer for parent.
-     */
-    explicit ColorChooser(const int &r, const int &g, const int &b,
-                          QWidget *parent = 0);
-    ~ColorChooser();
-    
-private:
-    QColor *mCurrentColor;
-    QPixmap *mPixmapColor;
-    QPainter *mPainterColor;
-
-public slots:
-    /**
-     * @brief Slot for set color to widget.
-     *
-     * @param color Color to set.
-     */
-    void setColor(const QColor &color);
-
-signals:
-    /**
-     * @brief Signal for sending choosen color
-     *
-     * @param Color to send
-     */
-    void sendColor(const QColor &);
-
-    void colorDialogClosed();
+    AbstractPaletteBar(ToolBar *toolBar);
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    
+    /**
+      * @brief Color buttons initializing
+      *
+      */
+    virtual void initializeItems() = 0;
+
+    PaletteButton *mColorButton;
+
+private:
+    ToolBar *mToolBar;
+    bool mIsRightButtonCLicked;
+
+private slots:
+    void colorClicked();
+
+protected:
+    void contextMenuEvent(QContextMenuEvent *);
 };
 
-#endif // COLORCHOOSER_H
+#endif // ABSTRACTPALETTEBAR_H

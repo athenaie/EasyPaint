@@ -28,7 +28,9 @@ SOURCES += main.cpp\
     undocommand.cpp \
     widgets/toolbar.cpp \
     widgets/colorchooser.cpp \
-    widgets/palettebar.cpp \
+    widgets/abstractpalettebar.cpp \
+    widgets/standardpalettebar.cpp \
+    widgets/custompalettebar.cpp \
     widgets/palettebutton.cpp \
     widgets/shortcutedit.cpp \
     dialogs/resizedialog.cpp \
@@ -68,7 +70,9 @@ HEADERS  += mainwindow.h \
     undocommand.h \
     widgets/toolbar.h \
     widgets/colorchooser.h \
-    widgets/palettebar.h \
+    widgets/abstractpalettebar.h \
+    widgets/standardpalettebar.h \
+    widgets/custompalettebar.h \
     widgets/palettebutton.h \
     widgets/shortcutedit.h \
     dialogs/resizedialog.h \
