@@ -96,6 +96,7 @@ void SprayInstrument::paint(ImageArea &imageArea, bool isSecondaryColor, bool)
     }
 
     int x, y;
+    painter.scale(1/imageArea.getZoomFactor(), 1/imageArea.getZoomFactor());
     for(int i(0); i < 12; i++)
     {
         switch(i) {
