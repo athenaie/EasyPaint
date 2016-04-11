@@ -76,7 +76,6 @@ void AdditionalTools::resizeCanvas(int width, int height, bool flag)
 
     mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
                         mPImageArea->getImage()->rect().bottom() + 6);
-    mPImageArea->resize(width, height);
     mPImageArea->setEdited(true);
     mPImageArea->clearSelection();
 }
@@ -86,11 +85,9 @@ void AdditionalTools::resizeImage()
     ResizeDialog resizeDialog(mPImageArea->getImage()->size(), qobject_cast<QWidget *>(this->parent()));
     if(resizeDialog.exec() == QDialog::Accepted)
     {
-        //QSize s = mPImageArea->size();
         mPImageArea->setImage(mPImageArea->getImage()->scaled(resizeDialog.getNewSize()));
-        mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
-                            mPImageArea->getImage()->rect().bottom() + 6);
-        //mPImageArea->resize(s.width()+6, s.height() + 6);
+        mPImageArea->resize(mPImageArea->getImage()->rect().right(),
+                            mPImageArea->getImage()->rect().bottom());
         mPImageArea->setEdited(true);
         mPImageArea->clearSelection();
     }
@@ -108,8 +105,8 @@ void AdditionalTools::rotateImage(bool flag)
         transform.rotate(-90);
     }
     mPImageArea->setImage(mPImageArea->getImage()->transformed(transform));
-    mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
-                        mPImageArea->getImage()->rect().bottom() + 6);
+    mPImageArea->resize(mPImageArea->getImage()->rect().right(),
+                        mPImageArea->getImage()->rect().bottom());
     mPImageArea->update();
     mPImageArea->setEdited(true);
     mPImageArea->clearSelection();
@@ -118,23 +115,11 @@ void AdditionalTools::rotateImage(bool flag)
 bool AdditionalTools::zoomImage(qreal factor)
 {
     mZoomedFactor *= factor;
-    if(mZoomedFactor < 0.25)
-    {
-        mZoomedFactor = 0.25;
-        return false;
-    }
-    else if(mZoomedFactor > 4)
-    {
-        mZoomedFactor = 4;
-        return false;
-    }
-    else
-    {
-        mPImageArea->setImage(*(mPImageArea->getImage()));
-        mPImageArea->resize((mPImageArea->rect().width())*factor, (mPImageArea->rect().height())*factor);
-        emit sendNewImageSize(mPImageArea->size());
-        mPImageArea->setEdited(true);
-        mPImageArea->clearSelection();
-        return true;
-    }
+
+    mPImageArea->setImage(*(mPImageArea->getImage()));
+    mPImageArea->resize(mPImageArea->rect().width() * factor, mPImageArea->rect().height() * factor);
+    emit sendNewImageSize(mPImageArea->size());
+    mPImageArea->setEdited(true);
+    mPImageArea->clearSelection();
+    return true;
 }

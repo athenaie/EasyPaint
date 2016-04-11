@@ -364,10 +364,10 @@ void ImageArea::cutImage()
 void ImageArea::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton &&
-            event->pos().x() < mImage->rect().right() + 6 &&
-            event->pos().x() > mImage->rect().right() &&
-            event->pos().y() > mImage->rect().bottom() &&
-            event->pos().y() < mImage->rect().bottom() + 6)
+            event->pos().x() < (mImage->rect().right() * mZoomFactor) + 6 &&
+            event->pos().x() > (mImage->rect().right() * mZoomFactor) &&
+            event->pos().y() > (mImage->rect().bottom() * mZoomFactor) &&
+            event->pos().y() < (mImage->rect().bottom() * mZoomFactor) + 6)
     {
         mIsResize = true;
         setCursor(Qt::SizeFDiagCursor);
@@ -385,13 +385,14 @@ void ImageArea::mouseMoveEvent(QMouseEvent *event)
     mInstrumentHandler = mInstrumentsHandlers.at(DataSingleton::Instance()->getInstrument());
     if(mIsResize)
     {
-         mAdditionalTools->resizeCanvas(event->x(), event->y());
+         mAdditionalTools->resizeCanvas(event->x()/mZoomFactor, event->y()/mZoomFactor);
          emit sendNewImageSize(mImage->size());
     }
-    else if(event->pos().x() < mImage->rect().right() + 6 &&
-            event->pos().x() > mImage->rect().right() &&
-            event->pos().y() > mImage->rect().bottom() &&
-            event->pos().y() < mImage->rect().bottom() + 6)
+    else if(event->pos().x() < (mImage->rect().right() * mZoomFactor) + 6 &&
+            event->pos().x() > (mImage->rect().right() * mZoomFactor) &&
+            event->pos().y() > (mImage->rect().bottom() * mZoomFactor) &&
+            event->pos().y() < (mImage->rect().bottom() * mZoomFactor) + 6)
+
     {
         setCursor(Qt::SizeFDiagCursor);
         if (qobject_cast<AbstractSelection*>(mInstrumentHandler))
@@ -430,24 +431,15 @@ void ImageArea::mouseReleaseEvent(QMouseEvent *event)
 void ImageArea::paintEvent(QPaintEvent *event)
 {
     QPainter *painter = new QPainter(this);
-    //QRect *rect = new QRect(event->rect());
 
     painter->scale(this->getZoomFactor(), this->getZoomFactor());
-    //painter->setBrush(QBrush(QPixmap(":media/textures/transparent.jpg")));
+
     painter->setBrush(QBrush(Qt::white));
     painter->drawRect(0, 0,
-                      mImage->rect().right()- 1,
-                      mImage->rect().bottom() - 1);
-    //painter->drawRect(0, 0, mCanvas.width() - 1, mCanvas.height() - 1);
+                      mImage->rect().right(),
+                      mImage->rect().bottom());
 
     painter->drawImage(event->rect(), *mImage, event->rect());
-    //painter->drawImage(QRect(0, 0, 100, 100), *mImage, mImage->rect());
-
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(Qt::black));
-    painter->drawRect(QRect(this->getZoomFactor() * mImage->rect().right(),
-                            this->getZoomFactor() * mImage->rect().bottom(), 6, 6));
-    //painter->drawRect(QRect(200, 205, 100, 100));
 
     painter->end();
 }
