@@ -70,12 +70,14 @@ void DataSingleton::readSetting()
     mFileShortcuts.insert("Print", settings.value("/Shortcuts/File/Print", QKeySequence(QKeySequence::Print)).value<QKeySequence>());
     mFileShortcuts.insert("Exit", settings.value("/Shortcuts/File/Exit", QKeySequence(QKeySequence::Quit)).value<QKeySequence>());
 
+
     //read shortcuts for edit menu
     mEditShortcuts.insert("Undo", settings.value("/Shortcuts/Edit/Undo", QKeySequence(QKeySequence::Undo)).value<QKeySequence>());
     mEditShortcuts.insert("Redo", settings.value("/Shortcuts/Edit/Redo", QKeySequence(QKeySequence::Redo)).value<QKeySequence>());
     mEditShortcuts.insert("Copy", settings.value("/Shortcuts/Edit/Copy", QKeySequence(QKeySequence::Copy)).value<QKeySequence>());
     mEditShortcuts.insert("Paste", settings.value("/Shortcuts/Edit/Paste", QKeySequence(QKeySequence::Paste)).value<QKeySequence>());
     mEditShortcuts.insert("Cut", settings.value("/Shortcuts/Edit/Cut", QKeySequence(QKeySequence::Cut)).value<QKeySequence>());
+    mEditShortcuts.insert("Delete", settings.value("/Shortcuts/File/Delete", "Del").value<QKeySequence>());
 
     //read shortcuts for instruments menu
     mInstrumentsShortcuts.insert("Cursor", settings.value("/Shortcuts/Instruments/Cursor", "Ctrl+1").value<QKeySequence>());

@@ -56,6 +56,34 @@ void SelectionInstrument::copyImage(ImageArea &imageArea)
     }
 }
 
+
+void SelectionInstrument::deleteImage(ImageArea &imageArea){
+    if (mIsSelectionExists)
+    {
+        if(mIsSelectionExists)
+        {
+            imageArea.setImage(mImageCopy);
+            paint(imageArea);
+        }
+        makeUndoCommand(imageArea);
+        if (mIsImageSelected)
+        {
+            imageArea.setImage(mImageCopy);
+        }
+        else
+        {
+            clearSelectionBackground(imageArea);
+        }
+        mTopLeftPoint = QPoint(0, 0);
+        mBottomRightPoint = QPoint(0, 0);
+        mImageCopy = *imageArea.getImage();
+        imageArea.update();
+        mIsSelectionExists = false;
+        imageArea.restoreCursor();
+        emit sendEnableCopyCutActions(false);
+    }
+}
+
 void SelectionInstrument::cutImage(ImageArea &imageArea)
 {
     if (mIsSelectionExists)

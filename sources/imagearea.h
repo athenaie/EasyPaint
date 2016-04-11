@@ -150,6 +150,11 @@ public:
      */
     void cutImage();
     /**
+      * @brief Delete image to the clipboard.
+      *
+      */
+    void deleteImage();
+    /**
      * @brief Save all image changes to image copy.
      *
      */
