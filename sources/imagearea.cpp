@@ -76,6 +76,9 @@ ImageArea::ImageArea(const bool &isOpen, const QString &filePath, QWidget *paren
     mFilePath = QString();
     makeFormatsFilters();
     initializeImage();
+
+    mCanvas = QRect(0, 0, mImage->width(), mImage->height());
+
     mZoomFactor = 1;
 
     mAdditionalTools = new AdditionalTools(this, this->parent());
@@ -170,6 +173,7 @@ void ImageArea::initializeImage()
 {
     mImage = new QImage(DataSingleton::Instance()->getBaseSize(),
                         QImage::Format_ARGB32_Premultiplied);
+
 }
 
 void ImageArea::open()
@@ -357,13 +361,19 @@ void ImageArea::cutImage()
     instrument->cutImage(*this);
 }
 
+void ImageArea::deleteImage()
+{
+    SelectionInstrument *instrument = static_cast <SelectionInstrument*> (mInstrumentsHandlers.at(CURSOR));
+    instrument->deleteImage(*this);
+}
+
 void ImageArea::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton &&
-            event->pos().x() < mImage->rect().right() + 6 &&
-            event->pos().x() > mImage->rect().right() &&
-            event->pos().y() > mImage->rect().bottom() &&
-            event->pos().y() < mImage->rect().bottom() + 6)
+            event->pos().x() < (mImage->rect().right() * mZoomFactor) + 6 &&
+            event->pos().x() > (mImage->rect().right() * mZoomFactor) &&
+            event->pos().y() > (mImage->rect().bottom() * mZoomFactor) &&
+            event->pos().y() < (mImage->rect().bottom() * mZoomFactor) + 6)
     {
         mIsResize = true;
         setCursor(Qt::SizeFDiagCursor);
@@ -381,13 +391,14 @@ void ImageArea::mouseMoveEvent(QMouseEvent *event)
     mInstrumentHandler = mInstrumentsHandlers.at(DataSingleton::Instance()->getInstrument());
     if(mIsResize)
     {
-         mAdditionalTools->resizeCanvas(event->x(), event->y());
+         mAdditionalTools->resizeCanvas(event->x()/mZoomFactor, event->y()/mZoomFactor);
          emit sendNewImageSize(mImage->size());
     }
-    else if(event->pos().x() < mImage->rect().right() + 6 &&
-            event->pos().x() > mImage->rect().right() &&
-            event->pos().y() > mImage->rect().bottom() &&
-            event->pos().y() < mImage->rect().bottom() + 6)
+    else if(event->pos().x() < (mImage->rect().right() * mZoomFactor) + 6 &&
+            event->pos().x() > (mImage->rect().right() * mZoomFactor) &&
+            event->pos().y() > (mImage->rect().bottom() * mZoomFactor) &&
+            event->pos().y() < (mImage->rect().bottom() * mZoomFactor) + 6)
+
     {
         setCursor(Qt::SizeFDiagCursor);
         if (qobject_cast<AbstractSelection*>(mInstrumentHandler))
@@ -426,19 +437,15 @@ void ImageArea::mouseReleaseEvent(QMouseEvent *event)
 void ImageArea::paintEvent(QPaintEvent *event)
 {
     QPainter *painter = new QPainter(this);
-    //QRect *rect = new QRect(event->rect());
 
-    painter->setBrush(QBrush(QPixmap(":media/textures/transparent.jpg")));
+    painter->scale(this->getZoomFactor(), this->getZoomFactor());
+
+    painter->setBrush(QBrush(Qt::white));
     painter->drawRect(0, 0,
-                      mImage->rect().right() - 1,
-                      mImage->rect().bottom() - 1);
+                      mImage->rect().right(),
+                      mImage->rect().bottom());
 
     painter->drawImage(event->rect(), *mImage, event->rect());
-
-    painter->setPen(Qt::NoPen);
-    painter->setBrush(QBrush(Qt::black));
-    painter->drawRect(QRect(mImage->rect().right(),
-                            mImage->rect().bottom(), 6, 6));
 
     painter->end();
 }

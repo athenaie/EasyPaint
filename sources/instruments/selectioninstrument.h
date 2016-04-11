@@ -63,6 +63,12 @@ public:
      * @param imageArea ImageArea for applying changes.
      */
     void cutImage(ImageArea &imageArea);
+    /**
+     * @brief Delete image.
+     *
+     * @param imageArea ImageArea for applying changes.
+     */
+    void deleteImage(ImageArea &imageArea);
 
 private:
     void startAdjusting(ImageArea &imageArea);

@@ -150,6 +150,11 @@ public:
      */
     void cutImage();
     /**
+      * @brief Delete image to the clipboard.
+      *
+      */
+    void deleteImage();
+    /**
      * @brief Save all image changes to image copy.
      *
      */
@@ -194,7 +199,9 @@ private:
     void makeFormatsFilters();
 
     QImage *mImage,  /**< Main image. */
-           mImageCopy; /**< Copy of main image, need for events. */ // ?????????????
+           mImageCopy, /**< Copy of main image, need for events. */ // ?????????????
+           mDummyImage;
+    QRect mCanvas;
     AdditionalTools *mAdditionalTools;
     QString mFilePath; /**< Path where located image. */
     QString mOpenFilter; /**< Supported open formats filter. */

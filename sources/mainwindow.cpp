@@ -229,6 +229,11 @@ void MainWindow::initializeMainMenu()
     connect(mCutAction, SIGNAL(triggered()), this, SLOT(cutAct()));
     editMenu->addAction(mCutAction);
 
+    mDeleteAction = new QAction(tr("Delete"), this);
+    mDeleteAction->setEnabled(false);
+    connect(mDeleteAction, SIGNAL(triggered()), this, SLOT(deleteAct()));
+    editMenu->addAction(mDeleteAction);
+
     editMenu->addSeparator();
 
     QAction *settingsAction = new QAction(tr("&Settings"), this);
@@ -585,6 +590,12 @@ void MainWindow::cutAct()
         imageArea->cutImage();
 }
 
+void MainWindow::deleteAct()
+{
+    if (ImageArea *imageArea = getCurrentImageArea())
+        imageArea->deleteImage();
+}
+
 void MainWindow::updateShortcuts()
 {
     mNewAction->setShortcut(DataSingleton::Instance()->getFileShortcutByKey("New"));
@@ -600,6 +611,7 @@ void MainWindow::updateShortcuts()
     mCopyAction->setShortcut(DataSingleton::Instance()->getEditShortcutByKey("Copy"));
     mPasteAction->setShortcut(DataSingleton::Instance()->getEditShortcutByKey("Paste"));
     mCutAction->setShortcut(DataSingleton::Instance()->getEditShortcutByKey("Cut"));
+    mDeleteAction->setShortcut(DataSingleton::Instance()->getEditShortcutByKey("Delete"));
 
     mInstrumentsActMap[CURSOR]->setShortcut(DataSingleton::Instance()->getInstrumentShortcutByKey("Cursor"));
     mInstrumentsActMap[ERASER]->setShortcut(DataSingleton::Instance()->getInstrumentShortcutByKey("Lastic"));
@@ -825,6 +837,7 @@ void MainWindow::enableCopyCutActions(bool enable)
 {
     mCopyAction->setEnabled(enable);
     mCutAction->setEnabled(enable);
+    mDeleteAction->setEnabled(enable);
 }
 
 void MainWindow::clearImageSelection()

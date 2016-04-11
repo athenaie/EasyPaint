@@ -86,8 +86,8 @@ void AdditionalTools::resizeImage()
     if(resizeDialog.exec() == QDialog::Accepted)
     {
         mPImageArea->setImage(mPImageArea->getImage()->scaled(resizeDialog.getNewSize()));
-        mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
-                            mPImageArea->getImage()->rect().bottom() + 6);
+        mPImageArea->resize(mPImageArea->getImage()->rect().right(),
+                            mPImageArea->getImage()->rect().bottom());
         mPImageArea->setEdited(true);
         mPImageArea->clearSelection();
     }
@@ -105,8 +105,8 @@ void AdditionalTools::rotateImage(bool flag)
         transform.rotate(-90);
     }
     mPImageArea->setImage(mPImageArea->getImage()->transformed(transform));
-    mPImageArea->resize(mPImageArea->getImage()->rect().right() + 6,
-                        mPImageArea->getImage()->rect().bottom() + 6);
+    mPImageArea->resize(mPImageArea->getImage()->rect().right(),
+                        mPImageArea->getImage()->rect().bottom());
     mPImageArea->update();
     mPImageArea->setEdited(true);
     mPImageArea->clearSelection();
@@ -115,23 +115,11 @@ void AdditionalTools::rotateImage(bool flag)
 bool AdditionalTools::zoomImage(qreal factor)
 {
     mZoomedFactor *= factor;
-    if(mZoomedFactor < 0.25)
-    {
-        mZoomedFactor = 0.25;
-        return false;
-    }
-    else if(mZoomedFactor > 4)
-    {
-        mZoomedFactor = 4;
-        return false;
-    }
-    else
-    {
-        mPImageArea->setImage(mPImageArea->getImage()->transformed(QTransform::fromScale(factor, factor)));
-        mPImageArea->resize((mPImageArea->rect().width())*factor, (mPImageArea->rect().height())*factor);
-        emit sendNewImageSize(mPImageArea->size());
-        mPImageArea->setEdited(true);
-        mPImageArea->clearSelection();
-        return true;
-    }
+
+    mPImageArea->setImage(*(mPImageArea->getImage()));
+    mPImageArea->resize(mPImageArea->rect().width() * factor, mPImageArea->rect().height() * factor);
+    emit sendNewImageSize(mPImageArea->size());
+    mPImageArea->setEdited(true);
+    mPImageArea->clearSelection();
+    return true;
 }
