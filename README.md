@@ -12,13 +12,6 @@ EasyPaint is a part of [Razor-qt's](https://github.com/Razor-qt) [3rd party appl
 Installing
 ----------
 
-Install EasyPaint using the commands, if you use CMake:
-
-    cd ./EasyPaint
-    cmake -DCMAKE_INSTALL_PREFIX=/usr
-    make
-    make install
-
 Install EasyPaint using the commands, if you use qmake:
 
     cd ./EasyPaint/sources
